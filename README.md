@@ -1,2 +1,2 @@
 # spark-sql-hackathon
-Entrnamiento y ejemplos de Spark SQL
+Entrenamiento y ejemplos de Spark SQL
