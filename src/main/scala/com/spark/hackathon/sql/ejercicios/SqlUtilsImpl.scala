@@ -45,7 +45,7 @@ class SqlUtilsImpl extends SqlUtils {
 
   override def registrarTablas(dataFramesARegistrar: Map[String, DataFrame]): Unit = {
     dataFramesARegistrar.foreach { case (tableName, dataFrame) =>
-      dataFrame.createOrReplaceGlobalTempView(tableName)
+      dataFrame.createOrReplaceTempView(tableName)
     }
   }
 
@@ -53,9 +53,23 @@ class SqlUtilsImpl extends SqlUtils {
     dataFrame.write.mode(SaveMode.Overwrite).parquet(path)
   }
 
-  override def totalVentaPorTienda(tickets: DataFrame, tiendas: DataFrame): DataFrame = ???
+  override def totalVentaPorTienda(tickets: DataFrame, tiendas: DataFrame): DataFrame = {
+    import sparkSession.implicits._
 
-  override def totalVentaPorNombreProvincia(): DataFrame = ???
+    tickets
+      .join(tiendas.withColumnRenamed("id", "tiendaId"), $"storeId" === $"tiendaId")
+      .groupBy($"nombre").sum("totalSale")
+  }
+
+  override def totalVentaPorNombreProvincia(): DataFrame = {
+    sparkSession.sql("SELECT prov.name, sum(tk.totalSale) AS totalVenta " +
+      "FROM tiendas as ti " +
+      "JOIN tickets tk ON ti.id == tk.storeId " +
+      "JOIN provincias prov ON ti.codProvincia == prov.postal_code " +
+      "GROUP BY prov.name " +
+      "ORDER BY totalVenta DESC"
+    )
+  }
 
   override def top20RegistrosJson(dataFrame: DataFrame): Seq[String] = {
     dataFrame.toJSON.take(20)

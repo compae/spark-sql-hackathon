@@ -10,11 +10,11 @@ object SparkSql extends App with SLF4JLogging {
     *
     * Dar un nombre a la app de Spark
     * Asignarle un master
-    * Implementar las funciones sobre DataFrames/DataSet[Row]
+    * Implementar SqlUtils
     *
     */
 
-  val sqlUtils = new SqlUtilsImpl
+  /*val sqlUtils = new SqlUtilsImpl
   val provincias = sqlUtils.leerFicheroProvincias
   val tickets = sqlUtils.leerFicheroTickets
   val tiendas = sqlUtils.leerFicheroTiendas
@@ -30,12 +30,13 @@ object SparkSql extends App with SLF4JLogging {
   val totalVentaPorTienda = sqlUtils.totalVentaPorTienda(tickets, tiendas)
   val topTotalVentaPorTienda = sqlUtils.top20RegistrosJson(totalVentaPorTienda)
 
-  log.error(s"Top ventas por tienda: \n\t${topTotalVentaPorTienda.mkString(",")}")
+  log.error(s"Top ventas por tienda: \n\t${topTotalVentaPorTienda.mkString(",\n")}")
+  totalVentaPorTienda.printSchema()
 
   val totalVentaPorNombreProvincia = sqlUtils.totalVentaPorNombreProvincia()
-  val topTotalVentaPorNombreProvincia = sqlUtils.top20RegistrosJson(totalVentaPorTienda)
+  val topTotalVentaPorNombreProvincia = sqlUtils.top20RegistrosJson(totalVentaPorNombreProvincia)
 
-  log.error(s"Top ventas por provincia: \n\t${topTotalVentaPorNombreProvincia.mkString(",")}")
-
+  log.error(s"Top ventas por provincia: \n\t${topTotalVentaPorNombreProvincia.mkString(",\n")}")
+  totalVentaPorNombreProvincia.printSchema()*/
 }
 
