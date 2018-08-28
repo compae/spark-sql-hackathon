@@ -13,6 +13,9 @@
         <Logger name="org.apache.spark" level="ERROR" additivity="false">
             <AppenderRef ref="console"/>
         </Logger>
+        <Logger name="org.spark_project.jetty.server.handler.ContextHandler" level="ERROR" additivity="false">
+            <AppenderRef ref="console"/>
+        </Logger>
         <Logger name="org.spark-project" level="ERROR" additivity="false">
             <AppenderRef ref="console"/>
         </Logger>
