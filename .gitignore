@@ -45,3 +45,4 @@ apidocs
 
 # Logs
 *.log
+spark.warehouse
